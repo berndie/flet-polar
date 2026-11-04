@@ -1,0 +1,35 @@
+// Flet extension dev (wrapping the `polar` Flutter plugin) with uv + Claude Code.
+// Flutter, JDK 17 and the Android SDK are installed by `flet build apk` on first run
+// into $HOME; the named volumes below keep them across container rebuilds.
+// CLI only, no editor extensions:
+//   devcontainer up --workspace-folder .
+//   devcontainer exec --workspace-folder . bash
+{
+  "name": "flet-polar",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+  "runArgs": ["--platform=linux/amd64"], // Android build-tools have no linux/arm64 build
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {},
+    "ghcr.io/va-h/devcontainers-features/uv:1": {}
+  },
+
+  "mounts": [
+    "source=flet-polar-flutter,target=/home/vscode/flutter,type=volume",
+    "source=flet-polar-java,target=/home/vscode/java,type=volume",
+    "source=flet-polar-android,target=/home/vscode/Android,type=volume",
+    "source=flet-polar-pubcache,target=/home/vscode/.pub-cache,type=volume",
+    "source=flet-polar-uvcache,target=/home/vscode/.cache/uv,type=volume",
+    "source=flet-polar-claude,target=/home/vscode/.claude,type=volume"
+  ],
+
+  "containerEnv": {
+    "UV_LINK_MODE": "copy",
+    "ANDROID_HOME": "/home/vscode/Android/Sdk"
+  },
+
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends xz-utils zip unzip && sudo chown -R vscode:vscode /home/vscode && uv sync",
+
+  "remoteUser": "vscode"
+}

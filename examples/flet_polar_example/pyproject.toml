@@ -1,0 +1,46 @@
+[project]
+name = "flet-polar-example"
+version = "1.0.0"
+description = "Finds Polar devices, connects to one and shows its heart rate."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "flet-polar",
+    "flet>=1.0.5",
+]
+
+[dependency-groups]
+dev = ["flet-cli>=1.0.5"]
+
+[tool.flet]
+org = "dev.fletpolar"
+product = "Flet Polar example"
+
+[tool.flet.app]
+path = "src"
+
+[tool.flet.dev_packages]
+flet-polar = "../.."
+
+[tool.uv.sources]
+flet-polar = { path = "../../", editable = true }
+
+# Required by flet-polar: see "Installation" in its README.
+[tool.flet.flutter.pubspec.dependency_overrides]
+device_info_plus = "^12.3.0"
+permission_handler = "12.0.1"
+
+# Required by the Polar BLE SDK.
+[tool.flet.android]
+min_sdk_version = 26
+
+[tool.flet.android.permission]
+"android.permission.BLUETOOTH_SCAN" = true
+"android.permission.BLUETOOTH_CONNECT" = true
+"android.permission.ACCESS_FINE_LOCATION" = true
+"android.permission.ACCESS_COARSE_LOCATION" = true
+
+[tool.flet.ios.info]
+NSBluetoothAlwaysUsageDescription = "Used to connect to Polar devices"
+NSBluetoothPeripheralUsageDescription = "Used to connect to Polar devices"
+UIBackgroundModes = ["bluetooth-central"]
