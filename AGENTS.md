@@ -22,7 +22,7 @@ examples/flet_polar_example/  Example app, also the reference app configuration
 ## Supported versions
 
 Flet 1.0.4 is the oldest supported version, and what the example and the lockfiles use, so
-CI tests the lower bound. Python 3.10+ can install the package, but CI only tests 3.14.
+CI tests the lower bound. CI tests the Python package on 3.10 up to and including 3.14. The APK is only built once.
 
 ## Commands
 
