@@ -8,7 +8,12 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Bernd Accou" }]
 keywords = ["flet", "polar", "ble", "heart-rate", "ecg", "h10", "verity-sense"]
-dependencies = ["flet>=1.0.5"]
+dependencies = ["flet>=1.0.4"]
+
+[project.urls]
+Homepage = "https://github.com/berndie/flet-polar"
+Repository = "https://github.com/berndie/flet-polar"
+Issues = "https://github.com/berndie/flet-polar/issues"
 
 [dependency-groups]
 dev = [

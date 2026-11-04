@@ -19,6 +19,11 @@ tests/              Python tests, including Python/Dart sync tests
 examples/flet_polar_example/  Example app, also the reference app configuration
 ```
 
+## Supported versions
+
+Flet 1.0.4 is the oldest supported version, and what the example and the lockfiles use, so
+CI tests the lower bound. Python 3.10+ can install the package, but CI only tests 3.14.
+
 ## Commands
 
 ```bash
@@ -26,7 +31,7 @@ uv sync
 uv run ruff check . && uv run ruff format --check .
 uv run pytest
 
-# Flutter 3.44.8 is what Flet 1.0.5 uses; `flet build` installs it in ~/flutter.
+# Flutter 3.44.8 is what Flet 1.0.4 and 1.0.5 use; `flet build` installs it in ~/flutter.
 cd src/flutter/flet_polar && flutter pub get && dart analyze . && flutter test
 
 # Native compile check. No device or hardware needed. Exit status is reliable only
@@ -37,6 +42,9 @@ cd examples/flet_polar_example && uv run flet build apk --arch arm64-v8a
 Run ruff, pytest, `dart analyze` and `flutter test` before finishing a change. After
 changing Dart code or dependencies, run the APK build as well. Behaviour against a real
 device cannot be tested here: say so rather than implying it was verified.
+
+CI (`.github/workflows/ci.yml`) runs all of this on every push and pull request. It also
+offers a manually triggered iOS archive build, the only way to check iOS without a Mac.
 
 ## The wire protocol
 
@@ -79,7 +87,7 @@ that build when bumping `flet` or `polar`.
 Dart honours overrides only in the root package. The copy in this package's `pubspec.yaml`
 only serves `flutter test` and `dart analyze` here.
 
-- `device_info_plus = "^12.3.0"`: `polar` 7.12.0 requires `^13`, Flet 1.0.5 requires `^12.3`.
+- `device_info_plus = "^12.3.0"`: `polar` 7.12.0 requires `^13`, Flet 1.0.4 and 1.0.5 require `^12.3`.
   Overriding upwards fails, because `device_info_plus` 13 needs `win32 ^6` and Flet's
   `file_picker` needs `win32 ^5`. `polar` only reads `androidInfo.version.sdkInt`.
 - `permission_handler = "12.0.1"`: `polar` 7.12.0 resolves to `permission_handler_android`

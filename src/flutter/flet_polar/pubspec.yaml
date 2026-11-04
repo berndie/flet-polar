@@ -8,7 +8,7 @@ environment:
   flutter: ">=3.44.0"
 
 dependencies:
-  flet: ^1.0.5
+  flet: ^1.0.4
   flutter:
     sdk: flutter
 
@@ -17,6 +17,8 @@ dependencies:
 # Only apply when working on this package directly. Apps must declare the same
 # overrides in their pyproject.toml: see "Installation" in the README.
 dependency_overrides:
+  # Test against the oldest supported version. Apps get theirs from `flet build`.
+  flet: 1.0.4
   device_info_plus: ^12.3.0
   permission_handler: 12.0.1
 

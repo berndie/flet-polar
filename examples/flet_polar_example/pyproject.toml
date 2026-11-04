@@ -6,11 +6,11 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "flet-polar",
-    "flet>=1.0.5",
+    "flet==1.0.4",
 ]
 
 [dependency-groups]
-dev = ["flet-cli>=1.0.5"]
+dev = ["flet-cli==1.0.4"]
 
 [tool.flet]
 org = "dev.fletpolar"

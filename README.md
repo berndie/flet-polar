@@ -15,11 +15,11 @@ This is an unofficial wrapper, not affiliated with Polar.
 
 On other platforms an app still starts, but `Polar` methods raise `RuntimeError`.
 
-Requires Flet 1.0.5+ (Flutter 3.44+), Android 8.0+ (API 26) and iOS 14+.
+Requires Flet 1.0.4+ (Flutter 3.44+), Android 8.0+ (API 26) and iOS 14+.
 
 > [!WARNING]
 > **iOS builds are untested and will probably need extra work.** `polar` requires iOS 14,
-> but the app template of `flet build` 1.0.5 targets iOS 13.0 and has no setting to change
+> but the app template of `flet build` 1.0.4 and 1.0.5 targets iOS 13.0 and has no setting to change
 > that. Expect a "higher minimum deployment target" error from CocoaPods. The likely fix is
 > a [custom build template](https://flet.dev/docs/publish) (`flet build ipa --template ...`)
 > with `platform :ios, '14.0'` in `ios/Podfile` and `IPHONEOS_DEPLOYMENT_TARGET = 14.0` in
@@ -34,8 +34,8 @@ Add these to the `pyproject.toml` of your Flet project.
 ```toml
 [project]
 dependencies = [
-    "flet-polar @ git+https://github.com/<your-account>/flet-polar",
-    "flet>=1.0.5",
+    "flet-polar @ git+https://github.com/berndie/flet-polar",
+    "flet>=1.0.4",
 ]
 ```
 
@@ -48,7 +48,7 @@ permission_handler = "12.0.1"
 ```
 
 Without them, `flet build` fails. `polar` 7.12.0 asks for newer versions of both packages
-than Flet 1.0.5 can use:
+than Flet 1.0.4 and 1.0.5 can use:
 
 - `device_info_plus ^13` cannot be resolved together with Flet, which needs `^12.3`.
 - `permission_handler ^13` resolves, but the Android build fails because it needs Android
