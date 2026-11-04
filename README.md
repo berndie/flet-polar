@@ -7,6 +7,9 @@ plugin, which is based on the official
 
 This is an unofficial wrapper, not affiliated with Polar.
 
+> [!CAUTION]
+> This project is mostly vibe-coded, so use it at your own risk.
+
 ## Platform support
 
 | Platform  | iOS | Android | Web | Windows | macOS | Linux |
