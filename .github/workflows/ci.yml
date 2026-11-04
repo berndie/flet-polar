@@ -88,3 +88,6 @@ jobs:
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - name: Build
         run: uv run --locked flet build ipa --yes --no-rich-output
+        env:
+          # polar needs iOS 14, Flet's template targets 13.0. See AGENTS.md.
+          FLUTTER_XCODE_IPHONEOS_DEPLOYMENT_TARGET: "14.0"

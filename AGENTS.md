@@ -97,8 +97,11 @@ only serves `flutter test` and `dart analyze` here.
   pins. `polar` only uses `Permission.<x>.request()`.
 - `min_sdk_version = 26`: required by Polar BLE SDK 6.16.1, although the plugin's Gradle file
   says 24. Flutter's default of 24 fails the manifest merge.
-- iOS is **unverified**: it needs macOS. `polar` needs iOS 14, Flet's template targets 13.0
-  and has no setting for it. See the warning in the README.
+- `FLUTTER_XCODE_IPHONEOS_DEPLOYMENT_TARGET=14.0` (environment variable, iOS only): `polar`
+  needs iOS 14, and Flet's template hardcodes 13.0 with no setting for it. Flutter reads
+  this target from `xcodebuild -showBuildSettings`, raises its generated Swift package to
+  match, and passes the variable on to `xcodebuild`. `flet build` inherits the environment.
+  **Unverified**: this comes from reading the Flutter 3.44.8 tools, and needs a macOS run.
 
 The first APK build needs about 10 GB of disk space for the Android SDK, NDK and Gradle
 caches. Flet gives Gradle an 8 GB heap, and the daemon died here with about 4 GB of memory

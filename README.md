@@ -21,12 +21,8 @@ On other platforms an app still starts, but `Polar` methods raise `RuntimeError`
 Requires Flet 1.0.4+ (Flutter 3.44+), Android 8.0+ (API 26) and iOS 14+.
 
 > [!WARNING]
-> **iOS builds are untested and will probably need extra work.** `polar` requires iOS 14,
-> but the app template of `flet build` 1.0.4 and 1.0.5 targets iOS 13.0 and has no setting to change
-> that. Expect a "higher minimum deployment target" error from CocoaPods. The likely fix is
-> a [custom build template](https://flet.dev/docs/publish) (`flet build ipa --template ...`)
-> with `platform :ios, '14.0'` in `ios/Podfile` and `IPHONEOS_DEPLOYMENT_TARGET = 14.0` in
-> the Xcode project.
+> **iOS is not verified yet.** No iOS build has succeeded so far, and the fix for the
+> deployment target below has not been run yet.
 
 ## Installation
 
@@ -87,6 +83,18 @@ NSBluetoothPeripheralUsageDescription = "Used to connect to Polar devices"
 UIBackgroundModes = ["bluetooth-central"]
 ```
 
+**5. iOS deployment target**
+
+`polar` requires iOS 14, but the app template of `flet build` 1.0.4 and 1.0.5 targets iOS
+13.0 and has no setting to change that. Without this, the build fails with "The package
+product 'polar' requires minimum platform version 14.0". Flutter passes `FLUTTER_XCODE_*`
+environment variables on to Xcode as build settings, so set this variable for every iOS
+build. It cannot go in `pyproject.toml`.
+
+```bash
+export FLUTTER_XCODE_IPHONEOS_DEPLOYMENT_TARGET=14.0
+```
+
 ### Run your app
 
 The extension contains native code, so the prebuilt client behind a plain `flet run`
@@ -94,8 +102,8 @@ cannot load it. It also needs Bluetooth, so use a real phone rather than an emul
 
 ```bash
 flet debug android -d <device-id>   # list devices with: flet debug --show-devices
-flet debug ios -d <device-id>
-flet build apk                      # or: flet build ipa
+flet debug ios -d <device-id>       # with the variable from step 5
+flet build apk                      # or: flet build ipa, with that variable
 ```
 
 ## Usage
