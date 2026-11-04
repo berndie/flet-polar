@@ -44,7 +44,8 @@ changing Dart code or dependencies, run the APK build as well. Behaviour against
 device cannot be tested here: say so rather than implying it was verified.
 
 CI (`.github/workflows/ci.yml`) runs all of this on every push and pull request. It also
-offers a manually triggered iOS archive build, the only way to check iOS without a Mac.
+builds an iOS archive, the only way to check iOS without a Mac. That job may fail without
+failing the run until iOS builds; remove its `continue-on-error` once it does.
 
 ## The wire protocol
 

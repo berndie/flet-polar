@@ -26,7 +26,7 @@ jobs:
       UV_PYTHON: ${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - run: uv sync --locked
       - run: uv run --no-sync ruff check .
       - run: uv run --no-sync ruff format --check .
@@ -64,7 +64,7 @@ jobs:
         # Flutter, the NDK and the Gradle caches need about 10 GB of the 14 GB SSD.
         working-directory: .
         run: sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - name: Build
         run: uv run --locked flet build apk --arch arm64-v8a --yes --no-rich-output
       - uses: actions/upload-artifact@v7
@@ -76,7 +76,8 @@ jobs:
 
   ios:
     name: iOS archive
-    if: github.event_name == 'workflow_dispatch'
+    needs: [python, dart]
+    continue-on-error: true # Remove once iOS builds.
     runs-on: macos-latest
     timeout-minutes: 45
     defaults:
@@ -84,6 +85,6 @@ jobs:
         working-directory: examples/flet_polar_example
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - name: Build
         run: uv run --locked flet build ipa --yes --no-rich-output
