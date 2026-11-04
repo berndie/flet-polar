@@ -64,16 +64,6 @@ jobs:
         # Flutter, the NDK and the Gradle caches need about 10 GB of the 14 GB SSD.
         working-directory: .
         run: sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
-      - name: Limit Gradle memory
-        # Flet asks for an 8 GB heap, which is all the RAM of a runner on a private
-        # repository. This file takes precedence over the settings of the project.
-        run: |
-          mkdir -p ~/.gradle
-          cat > ~/.gradle/gradle.properties <<'EOF'
-          org.gradle.jvmargs=-Xmx3G -XX:MaxMetaspaceSize=1G -XX:ReservedCodeCacheSize=256m
-          org.gradle.workers.max=4
-          kotlin.daemon.jvmargs=-Xmx1500m
-          EOF
       - uses: astral-sh/setup-uv@v10
       - name: Build
         run: uv run --locked flet build apk --arch arm64-v8a --yes --no-rich-output
@@ -85,9 +75,6 @@ jobs:
           retention-days: 7
 
   ios:
-    # Manual only: macOS minutes are about ten times the price of Linux ones on
-    # private repositories. Expected to fail until the deployment target problem in
-    # the README is solved.
     name: iOS archive
     if: github.event_name == 'workflow_dispatch'
     runs-on: macos-latest
